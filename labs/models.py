@@ -1,6 +1,6 @@
 from django.db import models
 from disciplinas.models import Disciplinas
-
+from django.contrib.auth.models import User
 
 """
 Tabela de Labs
@@ -20,6 +20,7 @@ Tabela de Submissão
 """
 class Submissao(models.Model):
     lab = models.ForeignKey(Labs, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     data_submissao = models.DateTimeField(auto_now_add=True)
     qtd_testes_corretos = models.IntegerField()
