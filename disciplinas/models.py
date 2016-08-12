@@ -12,3 +12,6 @@ class Disciplinas(models.Model):
     class Meta:
         ordering = ['codigo']
         unique_together = (('codigo', 'turma'),)
+
+    def __str__(self):
+        return '%s%s' %(self.codigo, self.turma)
