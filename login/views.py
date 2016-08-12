@@ -117,3 +117,24 @@ Renderiza a tela para alterar login
 @login_required(login_url='/login/')
 def alterar_login(request):
     return render(request, 'login/alterarLogin.html')
+
+"""
+Salva o novo login
+"""
+@login_required(login_url='/login/')
+def salvar_login(request):
+    user = User()
+
+    # recebe os dados
+    user.first_name = request.POST['nome']
+    user.last_name = request.POST['sobrenome']
+    user.email = request.POST['email']
+    user.username = request.POST['usuario']
+    user.password = request.POST['senha']
+    senha_confirmacao = request.POST['senha_confirmacao']
+
+    # verifica se deseja alterar senha
+    if 'alterar_senha' in request.POST:
+        print('entrou')
+    else:
+        print("else")
