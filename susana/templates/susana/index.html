@@ -1,82 +1,57 @@
 {% extends 'susana/dashboard.html' %}
 
+{% load staticfiles %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'susana/dist/css/dataTables.bootstrap.min.css' %}" />
+{% endblock %}
+
 {% block content %}
     <div class="page-header">
         <h3 class="h-title">Bem vindo {% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}!</h3>
     </div>
 
-    <div class="row">
-        <div class="form-group label-floating col-md-12">
-            <label for="empresa" class="control-label">Selecionar empresa</label>
-            <select id="empresa" name="empresa" class="form-control">
-                {% for empresa in request.session.permissoes %}
-                    <option value="{{ empresa.id }}" {% if empresa.id == request.session.empresa.id %}selected{% endif %}>
-                        {{ empresa.id }} - {{ empresa.razao_social }} - {{ empresa.endereco }}, {{ empresa.numero }} - {{ empresa.municipio }}
-                    </option>
-                {% endfor %}
-            </select>
+    <h4>Selecione a Disciplina...</h4>
 
-            <hr>
-
-            <div class="row">
-                <div class="col-md-6">
-                    Razão social: {{ request.session.empresa.razao_social }}
-                </div>
-                <div class="col-md-6">
-                    Nome fantasia: {{ request.session.empresa.nome_fantasia }}
-                </div>
-            </div>
-
-            <hr>
-
-            <div class="row">
-                <div class="col-md-5">
-                    Endereço: {{ request.session.empresa.endereco }}
-                </div>
-                <div class="col-md-2">
-                    Número: {{ request.session.empresa.numero }}
-                </div>
-                <div class="col-md-5">
-                    Bairro: {{ request.session.empresa.bairro }}
-                </div>
-            </div><br>
-            <div class="row">
-                <div class="col-md-5">
-                    Município: {{ request.session.empresa.municipio }}
-                </div>
-                <div class="col-md-2">
-                    CEP: {{ request.session.empresa.cep }}
-                </div>
-            </div>
-
-            <hr>
-
-            <div class="row">
-                <div class="col-md-4">
-                    Telefone: {{ request.session.empresa.telefone }}
-                </div>
-                <div class="col-md-4">
-                    Fax: {{ request.session.empresa.fax }}
-                </div>
-                <div class="col-md-4">
-                    Email: {{ request.session.empresa.email }}
-                </div>
-            </div><br>
-            <div class="row">
-                <div class="col-md-12">
-                    Site Web: <a href="{{ request.session.empresa.site_web }}">{{ request.session.empresa.site_web }}</a>
-                </div>
-            </div>
-        </div>
+    <div class="form-group">
+        <table class="table table-striped table-hover" id="table-disciplinas" width="100%" style="cursor: pointer">
+            <thead class="thead-inverse">
+                <td style="width: 5%">ID</td>
+                <td style="width: 10%;">Código</td>
+                <td style="width: 5%">Turma</td>
+                <td>Descrição</td>
+            </thead>
+            {% for disciplina in disciplinas %}
+                <tr>
+                    <td>{{ disciplina.id }}</td>
+                    <td>{{ disciplina.codigo }}</td>
+                    <td>{{ disciplina.turma }}</td>
+                    <td>{{ disciplina.descricao }}</td>
+                </tr>
+            {% endfor %}
+        </table>
     </div>
 {% endblock %}
 
 {% block footer %}
-    <script>
-        $("#empresa").change(function() {
-            var id = $("#empresa").val();
+    <script src="{% static 'susana/dist/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'susana/dist/js/dataTables.bootstrap.min.js' %}"></script>
 
-            window.location.href = "/empresas/seleciona_empresa_session/?id=" + id;
+    <script>
+        $(document).ready(function() {
+            var table = $('#table-disciplinas').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese.json"
+                }
+            });
+
+            // evento onclick da tabela
+            $('#table-disciplinas tbody').on('click', 'tr', function() {
+                var id = table.row(this).data()[0];
+
+                // envia o dado ao seleciona_cliente
+                window.location.href = "/clientes/seleciona_cliente/?id=" + id;
+            });
         });
     </script>
 {% endblock %}
