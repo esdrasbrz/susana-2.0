@@ -14,6 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MASTER_PATH_DIR = os.path.dirname(__file__)
 
 
 # Quick-start development settings - unsuitable for production
@@ -105,18 +106,34 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = False
 
 USE_TZ = True
+
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_HTTPONLY = True
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+AUTO_LOGOUT_DELAY = 15 # tempo para logout automatico '15 minutos'
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(MASTER_PATH_DIR, 'static'),
+]
+
+# Configuração de data
+DATE_FORMAT = 'd/m/Y'
+DATETIME_FORMAT = 'd/m/Y - P'
+DATE_INPUT_FORMATS = (
+    '%d/%m/%Y',
+)
