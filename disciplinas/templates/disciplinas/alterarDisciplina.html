@@ -1,0 +1,92 @@
+<form action="\" method="post" id="form">
+    {% csrf_token %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="material-icons">close</i></button>
+        <h3 class="modal-title h-title" id="alterarDialogLabel">
+            {% if novo_grupo %}
+                <i class="material-icons">add_circle</i> Novo grupo de clientes
+            {% else %}
+                <i class="material-icons">update</i> Alterar grupo de clientes
+            {% endif %}
+        </h3>
+    </div>
+
+    <div id="alterarDialogBody" class="modal-body">
+        <div class="row">
+            <div class="form-group label-floating col-md-2">
+                <label for="id" class="control-label">Cód. Grupo (*)</label>
+                <input name="id" id="id" class="form-control" onkeyup="to_upper(this);" maxlength="5" {% if grupo.id %}value="{{ grupo.id }}" readonly{% endif %} required oninvalid="this.setCustomValidity('Campo requerido')" onchange="try{setCustomValidity('')}catch(e){}">
+            </div>
+            <div class="form-group label-floating col-md-10">
+                <label for="nome" class="control-label">Nome (*)</label>
+                <input name="nome" id="nome" class="form-control" onkeyup="to_upper(this);" {% if grupo.nome %}value="{{ grupo.nome }}"{% endif %} maxlength="50" required oninvalid="this.setCustomValidity('Campo requerido')" onchange="try{setCustomValidity('')}catch(e){}">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group label-floating">
+                <label for="mensagem" class="control-label">Mensagem</label>
+                <textarea name="mensagem" id="mensagem" class="form-control" rows="5">{% if grupo.mensagem %}{{ grupo.mensagem }}{% endif %}</textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="cor" class="control-label">Cor do grupo</label>
+                <select id="cor" name="cor" class="form-control">
+                    <option value="1" {% if grupo.cor == 1 %}selected{% endif %}>Verde</option>
+                    <option value="2" {% if grupo.cor == 2 %}selected{% endif %}>Azul</option>
+                    <option value="3" {% if grupo.cor == 3 %}selected{% endif %}>Amarelo</option>
+                    <option value="4" {% if grupo.cor == 4 %}selected{% endif %}>Vermelho</option>
+                    <option value="5" {% if grupo.cor == 5 %}selected{% endif %}>Preto</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-4">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="bloquear" id="bloquear" {% if grupo.bloquear %}checked{% endif %}>
+                        <span class="checkbox-material"><span class="check"></span></span>
+                        Bloquear
+                    </label>
+                </div>
+                <p class="help-tooltip">Bloquear grupo de clientes</p>
+            </div>
+        </div>
+
+
+        <!-- Diálogo para confirmação de exclusão -->
+        <div id="confirmModal" class="modal fade">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Você tem certeza que quer excluir o grupo '{{ grupo.id }}'?</h3>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="btExcluir"><i class="material-icons">delete</i> Excluir</button>
+                        <button type="button" data-dismiss="modal" class="btn btn-default"><i class="material-icons">cancel</i> Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="material-icons">cancel</i> Cancelar</button>
+        <button type="submit" class="btn btn-primary"  id="btSalvar">
+            <i class="material-icons">save</i> Salvar
+        </button>
+        {% if not novo_grupo %}
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmModal"><i class="material-icons">delete</i> Excluir</button>
+        {% endif %}
+    </div>
+</form>
+
+<script>
+    $("#btExcluir").click(function() {
+        // submete o form para excluir
+        $("#form").submit();
+    });
+</script>

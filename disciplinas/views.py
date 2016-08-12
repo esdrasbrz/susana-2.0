@@ -13,3 +13,12 @@ def disciplinas(request):
     disciplinas = Disciplinas.objects.all()
 
     return render(request, 'disciplinas/disciplinas.html', {'disciplinas': disciplinas})
+
+"""
+Cria uma nova disciplina para inserção
+"""
+@login_required(login_url='/login/')
+@user_passes_test(is_superuser, login_url='/login/')
+def nova_disciplina(request):
+    # renderiza o diálogo de alterar disciplina
+    return render(request, 'disciplinas/alterarDisciplina.html', {'nova_disciplina': True})
