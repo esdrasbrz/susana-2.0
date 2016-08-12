@@ -71,3 +71,9 @@ def logout_view(request):
     messages.success(request, "Logout efetuado com sucesso!")
 
     return HttpResponseRedirect(next)
+
+"""
+Renderiza o template para cadastrar um novo usuário
+"""
+def cadastro(request):
+    return render(request, 'login/cadastro.html')
