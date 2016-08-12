@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{% block title %}Loja Online{% endblock %}</title>
+    <title>{% block title %}susana Online{% endblock %}</title>
 
     <link rel="icon" type="image/jpg" href="https://storage.googleapis.com/material-icons/external-assets/v4/icons/svg/ic_shopping_cart_black_24px.svg" />
 
@@ -34,8 +34,8 @@
     <link href="{% static 'susana/css/dashboard.css' %}" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="{% static ssusanaa %}"></script><![endif]-->
-    <script src="{% static 'loja/assets/js/ie-emulation-modes-warningsusana %}"></script>
+    <!--[if lt IE 9]><script src="{% static 'susana/assets/js/ie8-responsive-file-warning.js' %}"></script><![endif]-->
+    <script src="{% static 'susana/assets/js/ie-emulation-modes-warning.js' %}"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -51,7 +51,7 @@
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="/"><i class="material-icons">home</i> Loja Online 4.0</a>
+            <a class="navbar-brand" href="/"><i class="material-icons">home</i> susana Online 4.0</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-left">
@@ -68,7 +68,7 @@
                         <li><a href="/caixa/pdv"><i class="material-icons">shopping_cart</i> Caixas...</a></li>
                         <li><a href="/controle_estoque/cfop"><i class="material-icons">local_shipping</i> Controle de Estoque...</a></li>
                         <hr>
-                        <li><a href="/empresas"><i class="material-icons">store</i> Loja...</a></li>
+                        <li><a href="/empresas"><i class="material-icons">store</i> susana...</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -97,17 +97,9 @@
       </div>
     </nav>
 
-    <div id="wrapper" class="container-fluid">
+    <div class="container-fluid">
       <div class="row">
-        <div id="sidebar-wrapper" class="col-sm-3 col-md-2 sidebar well page">
-            <ul class="nav nav-sidebar">
-                <li class="withripple"><a href="#" onclick="menu_toggle()">Menu <i class="material-icons pull-right">menu</i></a></li>
-            </ul>
-            <hr>
-            {% block sidebar %}{% endblock %}
-        </div>
-
-        <div id="page-content-wrapper" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="min-width: 1000px;">
+        <div class="main" style="min-width: 1000px;">
             <br/>
             {% if messages %}
                 {% for msg in messages %}
@@ -142,8 +134,11 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
 
-    <script src="{% static 'loja/dist/js/bootstrap.min.js' %}"></scrisusana
-    <script src="{% static 'loja/dist/js/ripples.min.js' %}"></scriptsusana  <script src="{% static 'loja/dist/js/material.min.js' %}"></scripsusana   <script>
+    <script src="{% static 'susana/dist/js/bootstrap.min.js' %}"></script>
+
+    <script src="{% static 'susana/dist/js/ripples.min.js' %}"></script>
+    <script src="{% static 'susana/dist/js/material.min.js' %}"></script>
+    <script>
         $.material.init();
         $(document).ready( function() {
             $('.dropdown-toggle').dropdown();
@@ -154,20 +149,22 @@
         }
     </script>
 
-    <script src="{% static 'loja/dist/js/alert.js' %}"></script>
+    <script src="{% static 'susana/dist/js/alert.js' %}"></script>
 
-   susana- mascaras -->
-    <script type="text/javascript" src="{% static 'loja/dist/js/jquery.maskedinput.min.js' %susana/script>
-    <script src="{% static 'loja/js/mascaras.js' %}"></script>
+    <!-- mascaras -->
+    <script type="text/javascript" src="{% static 'susana/dist/js/jquery.maskedinput.min.js' %}"></script>
+    <script src="{% static 'susana/js/mascaras.js' %}"></script>
 
-    <susanacomplete bootstrap -->
-    <script type="text/javascript" src="{% static 'loja/dist/js/transition.js' %}"></script>susana <script type="text/javascript" src="{% static 'loja/dist/js/collapse.js' %}"></script>
+    <!-- complete bootstrap -->
+    <script type="text/javascript" src="{% static 'susana/dist/js/transition.js' %}"></script>
+    <script type="text/javascript" src="{% static 'susana/dist/js/collapse.js' %}"></script>
 
-susana<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="{% static 'loja/assets/js/ie10-viewport-bug-workaroususanas' %}"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="{% static 'susana/assets/js/ie10-viewport-bug-workaround.js' %}"></script>
 
     <!-- Shortcuts -->
-    <script src="{% static 'loja/dist/js/mousetrap.min.js' %}"></scrisusana    <script>
+    <script src="{% static 'susana/dist/js/mousetrap.min.js' %}"></script>
+    <script>
         // atalhos
         Mousetrap.bind('ctrl+5', function(e) {
             window.location.assign('/clientes/');
