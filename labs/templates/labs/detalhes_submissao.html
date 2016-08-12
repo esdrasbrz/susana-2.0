@@ -8,14 +8,24 @@
 
 {% block content %}
     <div class="page-header">
-        <h3 class="h-title">{{ submissao.lab }} - {{ submissao.lab.disciplina }} - Detalhes de Submissão...</h3>
+        <h3 class="h-title">{{ submissao.lab }} - {{ submissao.lab.disciplina }} - Detalhes de Submissão {{ submissao.data_submissao }}...</h3>
     </div>
 
     <div class="row">
         <div class="col-md-12">
-            Testes corretos: {{ submissao.qtd_testes_corretos }}/{{ submissao.lab.qtd_testes }}
+            <h4>Testes corretos: {{ submissao.qtd_testes_corretos }}/{{ submissao.lab.qtd_testes }}</h4>
         </div>
     </div>
+
+    <hr>
+
+    {% for linha in submissao.get_linhas_detalhes %}
+        <div class="row">
+            <div class="col-md-12">
+                <h4>{{ linha }}</h4>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}
 
 {% block footer %}

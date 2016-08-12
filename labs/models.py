@@ -27,5 +27,8 @@ class Submissoes(models.Model):
 
     detalhes = models.TextField()
 
+    def get_linhas_detalhes(self):
+        return self.detalhes.split('\n')
+
     class Meta:
         ordering = ['data_submissao']
