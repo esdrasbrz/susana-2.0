@@ -55,7 +55,7 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-left">
-                <li><a href="{% url 'login:alterar_login' %}"><i class="material-icons">update</i> Alterar Login</a></li>
+                <li><a href="{% url 'login:alterar_login' %}"><i class="material-icons">update</i> Alterar Login...</a></li>
             </ul>
           <ul class="nav navbar-nav navbar-right">
               <li><a href="/login/out/?next=/">Logado como: {% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %} - Sair <i class="material-icons">https</i></a></li>
@@ -99,6 +99,16 @@
 
     <script src="{% static 'susana/dist/js/ripples.min.js' %}"></script>
     <script src="{% static 'susana/dist/js/material.min.js' %}"></script>
+    <script>
+        $.material.init();
+        $(document).ready( function() {
+            $('.dropdown-toggle').dropdown();
+        });
+
+        function menu_toggle() {
+            $("#wrapper").toggleClass("active");
+        }
+    </script>
 
     <script src="{% static 'susana/dist/js/alert.js' %}"></script>
 
@@ -115,6 +125,18 @@
 
     <!-- Shortcuts -->
     <script src="{% static 'susana/dist/js/mousetrap.min.js' %}"></script>
+    <script>
+        // atalhos
+        Mousetrap.bind('ctrl+5', function(e) {
+            window.location.assign('/clientes/');
+        });
+        Mousetrap.bind('ctrl+6', function(e) {
+            window.location.assign('/contas_receber/extratos');
+        });
+        Mousetrap.bind('ctrl+8', function(e) {
+            window.location.assign('/caixa');
+        });
+    </script>
 
     {% block footer %}{% endblock %}
   </body>
