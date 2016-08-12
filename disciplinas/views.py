@@ -59,3 +59,22 @@ def seleciona_disciplina(request):
 
     # renderiza o diálogo de alterar disciplina
     return render(request, 'disciplinas/alterarDisciplina.html', {'disciplina': disciplina})
+
+"""
+Excluir a disciplina e seus arquivos
+"""
+@login_required(login_url='/login/')
+@user_passes_test(is_superuser, login_url='/login/')
+@transaction.atomic
+def excluir_disciplina(request):
+    # Procura a disciplina
+    disciplina = Disciplinas.objects.get(pk=request.POST['id'])
+
+    # excluir os arquivos
+    apaga_disciplina(str(disciplina))
+    # exclui do BD
+    disciplina.delete()
+
+    # renderiza a listagem de disciplinas
+    messages.success(request, 'Disciplina excluída com sucesso!')
+    return disciplinas(request)

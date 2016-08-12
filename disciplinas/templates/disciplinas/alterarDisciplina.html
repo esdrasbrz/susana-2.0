@@ -40,7 +40,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3>Você tem certeza que quer excluir o grupo '{{ grupo.id }}'?</h3>
+                        <h3>Você tem certeza que quer excluir a disciplina '{{ disciplina}}'?</h3>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" id="btExcluir"><i class="material-icons">delete</i> Excluir</button>
@@ -66,6 +66,7 @@
 <script>
     $("#btExcluir").click(function() {
         // submete o form para excluir
+        $("#form").attr("action", "{% url 'disciplinas:excluir_disciplina' %}");
         $("#form").submit();
     });
 </script>
