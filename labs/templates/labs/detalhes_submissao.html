@@ -1,0 +1,42 @@
+{% extends 'susana/dashboard.html' %}
+
+{% load staticfiles %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'susana/dist/css/dataTables.bootstrap.min.css' %}" />
+{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h3 class="h-title">{{ submissao.lab }} - {{ submissao.lab.disciplina }} - Detalhes de Submissão...</h3>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            Testes corretos: {{ submissao.qtd_testes_corretos }}/{{ submissao.lab.qtd_testes }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <script src="{% static 'susana/dist/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'susana/dist/js/dataTables.bootstrap.min.js' %}"></script>
+
+    <script>
+        $(document).ready(function() {
+            var table = $('#table-labs').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese.json"
+                }
+            });
+
+            // evento onclick da tabela
+            $('#table-labs tbody').on('click', 'tr', function() {
+                var id = table.row(this).data()[0];
+
+                // envia o dado ao seleicona lab
+                window.location.href = "/labs/seleciona_lab/" + id + "/";
+            });
+        });
+    </script>
+{% endblock %}

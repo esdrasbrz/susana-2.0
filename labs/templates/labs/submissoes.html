@@ -12,7 +12,7 @@
     </div>
 
     <div class="form-group">
-        <table class="table table-striped table-hover" id="table-labs" width="100%" style="cursor: pointer">
+        <table class="table table-striped table-hover" id="table-submissoes" width="100%" style="cursor: pointer">
             <thead class="thead-inverse">
                 <td style="width: 5%">ID</td>
                 <td>Data</td>
@@ -36,7 +36,7 @@
 
     <script>
         $(document).ready(function() {
-            var table = $('#table-labs').DataTable({
+            var table = $('#table-submissoes').DataTable({
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese.json"
                 },
@@ -46,11 +46,11 @@
             });
 
             // evento onclick da tabela
-            $('#table-labs tbody').on('click', 'tr', function() {
+            $('#table-submissoes tbody').on('click', 'tr', function() {
                 var id = table.row(this).data()[0];
 
-                // envia o dado ao labs
-                window.location.href = "/clientes/seleciona_cliente/?id=" + id;
+                // envia o dado ao seleciona submissao
+                window.location.href = "/labs/seleciona_submissao/" + id + "/";
             });
         });
     </script>

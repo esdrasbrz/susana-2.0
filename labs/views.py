@@ -25,3 +25,14 @@ def seleciona_lab(request, lab_id):
 
     # renderiza para a tela de submissões
     return render(request, 'labs/submissoes.html', {'lab': lab, 'submissoes': submissoes})
+
+"""
+Seleciona a submissão para exibir os detalhes
+"""
+@login_required(login_url='/login/')
+def seleciona_submissao(request, submissao_id):
+    # busca a submissão
+    submissao = Submissoes.objects.get(pk=submissao_id)
+
+    # renderiza para a tela de detalhes
+    return render(request, 'labs/detalhes_submissao.html', {"submissao": submissao})
