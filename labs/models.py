@@ -16,9 +16,9 @@ class Labs(models.Model):
         return self.nome
 
 """
-Tabela de Submissão
+Tabela de Submissões
 """
-class Submissao(models.Model):
+class Submissoes(models.Model):
     lab = models.ForeignKey(Labs, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
