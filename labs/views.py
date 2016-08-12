@@ -11,4 +11,4 @@ def seleciona_disciplina(request, disciplina_id):
     disciplina = Disciplinas.objects.get(pk=disciplina_id)
 
     # rederiza listando todos os labs
-    return render(request, 'labs/labs.html', {'labs': disciplina.labs_set.all()})
+    return render(request, 'labs/labs.html', {'labs': disciplina.labs_set.all(), 'disciplina': disciplina})
