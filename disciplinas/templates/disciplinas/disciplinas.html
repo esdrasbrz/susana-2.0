@@ -67,8 +67,17 @@
             $('#table-disciplinas tbody').on('click', 'tr', function() {
                 var id = table.row(this).data()[0];
 
-                // envia o dado ao seleicona lab
-                window.location.href = "/labs/seleciona_lab/" + id + "/";
+                // chama o metodo para selecionar disciplina
+                $.ajax({
+                    url: "{% url 'disciplinas:seleciona_disciplina' %}",
+                    data: {
+                        id: id
+                    },
+                    success: function (html) {
+                        $('#alterarDialogContent').html(html); // seta o corpo do dialogo alterar
+                        $('#triggerAlterarDialog').click(); // abre o dialogo
+                    }
+                })
             });
         });
 

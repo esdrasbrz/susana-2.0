@@ -47,3 +47,15 @@ def salvar_disciplina(request):
     # renderiza à listagem
     messages.success(request, 'Disciplina salva com sucesso!')
     return disciplinas(request)
+
+"""
+Seleciona a disciplina para exibir no form
+"""
+@login_required(login_url='/login/')
+@user_passes_test(is_superuser, login_url='/login/')
+def seleciona_disciplina(request):
+    # procura a disciplina
+    disciplina = Disciplinas.objects.get(pk=request.GET['id'])
+
+    # renderiza o diálogo de alterar disciplina
+    return render(request, 'disciplinas/alterarDisciplina.html', {'disciplina': disciplina})

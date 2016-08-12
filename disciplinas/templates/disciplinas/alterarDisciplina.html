@@ -53,10 +53,11 @@
 
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal"><i class="material-icons">cancel</i> Cancelar</button>
-        <button type="submit" class="btn btn-primary"  id="btSalvar">
-            <i class="material-icons">save</i> Salvar
-        </button>
-        {% if not nova_disciplina %}
+        {% if nova_disciplina %}
+            <button type="submit" class="btn btn-primary"  id="btSalvar">
+                <i class="material-icons">save</i> Salvar
+            </button>
+        {% else %}
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmModal"><i class="material-icons">delete</i> Excluir</button>
         {% endif %}
     </div>
