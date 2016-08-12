@@ -15,11 +15,6 @@ def index(request):
     except:
         next = '/' # default next
 
-    # verifica se o usuario ja esta logado
-    if request.user.is_authenticated():
-        # redireciona para o next
-        return HttpResponseRedirect(next)
-
     # seta o next na session
     request.session['next'] = next
 

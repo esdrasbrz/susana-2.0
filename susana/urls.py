@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^$', views.index),
     url(r'^login/', include('login.urls')),
     url(r'^labs/', include('labs.urls')),
+    url(r'^disciplinas/', include('disciplinas.urls')),
 ]
