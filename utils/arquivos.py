@@ -1,7 +1,5 @@
 """
     Script com funcoes para compilar e testar o programa enviado pelo SuSana
-
-    Obs.: Script funciona em python 2.7
 """
 import os
 import subprocess
