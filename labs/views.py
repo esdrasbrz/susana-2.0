@@ -23,4 +23,4 @@ def seleciona_lab(request, lab_id):
     lab = Labs.objects.get(pk=lab_id)
 
     # renderiza para a tela de submissões
-    return render(request, 'labs/submissoes.html', {'lab': lab})
+    return render(request, 'labs/submissoes.html', {'lab': lab, 'submissoes': lab.submissao_set.all()})
