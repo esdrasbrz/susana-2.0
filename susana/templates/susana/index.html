@@ -1,0 +1,82 @@
+{% extends 'loja/dashboard.html' %}
+
+{% block content %}
+    <div class="page-header">
+        <h3 class="h-title">Bem vindo {% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}!</h3>
+    </div>
+
+    <div class="row">
+        <div class="form-group label-floating col-md-12">
+            <label for="empresa" class="control-label">Selecionar empresa</label>
+            <select id="empresa" name="empresa" class="form-control">
+                {% for empresa in request.session.permissoes %}
+                    <option value="{{ empresa.id }}" {% if empresa.id == request.session.empresa.id %}selected{% endif %}>
+                        {{ empresa.id }} - {{ empresa.razao_social }} - {{ empresa.endereco }}, {{ empresa.numero }} - {{ empresa.municipio }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <hr>
+
+            <div class="row">
+                <div class="col-md-6">
+                    Razão social: {{ request.session.empresa.razao_social }}
+                </div>
+                <div class="col-md-6">
+                    Nome fantasia: {{ request.session.empresa.nome_fantasia }}
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row">
+                <div class="col-md-5">
+                    Endereço: {{ request.session.empresa.endereco }}
+                </div>
+                <div class="col-md-2">
+                    Número: {{ request.session.empresa.numero }}
+                </div>
+                <div class="col-md-5">
+                    Bairro: {{ request.session.empresa.bairro }}
+                </div>
+            </div><br>
+            <div class="row">
+                <div class="col-md-5">
+                    Município: {{ request.session.empresa.municipio }}
+                </div>
+                <div class="col-md-2">
+                    CEP: {{ request.session.empresa.cep }}
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row">
+                <div class="col-md-4">
+                    Telefone: {{ request.session.empresa.telefone }}
+                </div>
+                <div class="col-md-4">
+                    Fax: {{ request.session.empresa.fax }}
+                </div>
+                <div class="col-md-4">
+                    Email: {{ request.session.empresa.email }}
+                </div>
+            </div><br>
+            <div class="row">
+                <div class="col-md-12">
+                    Site Web: <a href="{{ request.session.empresa.site_web }}">{{ request.session.empresa.site_web }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <script>
+        $("#empresa").change(function() {
+            var id = $("#empresa").val();
+
+            window.location.href = "/empresas/seleciona_empresa_session/?id=" + id;
+        });
+    </script>
+{% endblock %}
