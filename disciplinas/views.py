@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, user_passes_test
 from login.user_tests import *
+from .models import *
 
 """
 Lista todas as disciplinas para possíveis alterações
@@ -8,4 +9,7 @@ Lista todas as disciplinas para possíveis alterações
 @login_required(login_url='/login/')
 @user_passes_test(is_superuser, login_url='/login/')
 def disciplinas(request):
-    return render(request, 'labs/labs.html')
+    # lista todas as disciplinas
+    disciplinas = Disciplinas.objects.all()
+
+    return render(request, 'disciplinas/disciplinas.html', {'disciplinas': disciplinas})
