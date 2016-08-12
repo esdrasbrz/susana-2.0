@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from disciplinas.models import Disciplinas
 from .models import *
 from django.contrib.auth.decorators import login_required
 

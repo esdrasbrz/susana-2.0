@@ -32,13 +32,17 @@
 {% block footer %}
     <script src="{% static 'susana/dist/js/jquery.dataTables.min.js' %}"></script>
     <script src="{% static 'susana/dist/js/dataTables.bootstrap.min.js' %}"></script>
+    <script src="{% static 'susana/dist/js/dataTables.datetime-eu.js' %}"></script>
 
     <script>
         $(document).ready(function() {
             var table = $('#table-labs').DataTable({
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese.json"
-                }
+                },
+                columnDefs: [
+                    {"type": "datetime-eu", targets: 1}
+                ]
             });
 
             // evento onclick da tabela
