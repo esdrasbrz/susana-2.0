@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{% block title %}susana Online{% endblock %}</title>
+    <title>{% block title %}SuSana{% endblock %}</title>
 
     <link rel="icon" type="image/jpg" href="https://storage.googleapis.com/material-icons/external-assets/v4/icons/svg/ic_shopping_cart_black_24px.svg" />
 
@@ -51,44 +51,10 @@
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="/"><i class="material-icons">home</i> susana Online 4.0</a>
+            <a class="navbar-brand" href="/"><i class="material-icons">home</i> SuSana 2.0</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-left">
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                        <i class="material-icons">account_box</i> Cadastros
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/clientes/"><i class="material-icons">face</i> Clientes...</a></li>
-                        <li><a href="/contas_receber/historicos"><i class="material-icons">monetization_on</i> Contas a Receber...</a></li>
-                        <li><a href="/contas_pagar/fornecedores"><i class="material-icons">payment</i> Contas a Pagar...</a></li>
-                        <li><a href="/controle_bancario/contas_bancarias"><i class="material-icons">business</i> Controle Bancário...</a></li>
-                        <li><a href="/caixa/pdv"><i class="material-icons">shopping_cart</i> Caixas...</a></li>
-                        <li><a href="/controle_estoque/cfop"><i class="material-icons">local_shipping</i> Controle de Estoque...</a></li>
-                        <hr>
-                        <li><a href="/empresas"><i class="material-icons">store</i> susana...</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                        <i class="material-icons">monetization_on</i> Contas a Receber
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/contas_receber/extratos"><i class="material-icons">note</i> Documentos...</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                        <i class="material-icons">content_paste</i> Controle de Estoque
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/caixa"><i class="material-icons">shopping_cart</i> Caixa...</a></li>
-                    </ul>
-                </li>
             </ul>
           <ul class="nav navbar-nav navbar-right">
               <li><a href="/login/out/?next=/">Logado como: {% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %} - Sair <i class="material-icons">https</i></a></li>
@@ -119,12 +85,6 @@
 
             <div class="well page">
             {% block content %}{% endblock %}
-            </div>
-
-            <br>
-
-            <div class="well page" style="background-color: #EEEEEE">
-                {{ request.session.empresa.id }} - {{ request.session.empresa.razao_social }} - {{ request.session.empresa.endereco }}, {{ request.session.empresa.numero }} - {{ request.session.empresa.municipio }}
             </div>
         </div>
       </div>
