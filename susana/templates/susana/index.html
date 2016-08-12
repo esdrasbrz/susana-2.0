@@ -49,7 +49,7 @@
             $('#table-disciplinas tbody').on('click', 'tr', function() {
                 var id = table.row(this).data()[0];
 
-                // envia o dado ao seleciona_cliente
+                // envia o dado ao labs
                 window.location.href = "/clientes/seleciona_cliente/?id=" + id;
             });
         });

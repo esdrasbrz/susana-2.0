@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'login.apps.LoginConfig',
     'disciplinas.apps.DisciplinasConfig',
+    'labs.apps.LabsConfig',
 ]
 
 MIDDLEWARE_CLASSES = [
