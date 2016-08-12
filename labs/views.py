@@ -21,6 +21,8 @@ Seleciona o Lab para fazer a submissão
 def seleciona_lab(request, lab_id):
     # procura o lab
     lab = Labs.objects.get(pk=lab_id)
+    # procura as submissoes
+    submissoes = lab.submissao_set.filter(user_id=request.user.id).all()
 
     # renderiza para a tela de submissões
-    return render(request, 'labs/submissoes.html', {'lab': lab, 'submissoes': lab.submissao_set.all()})
+    return render(request, 'labs/submissoes.html', {'lab': lab, 'submissoes': submissoes})
