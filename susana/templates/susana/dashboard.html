@@ -138,16 +138,6 @@
 
     <script src="{% static 'susana/dist/js/ripples.min.js' %}"></script>
     <script src="{% static 'susana/dist/js/material.min.js' %}"></script>
-    <script>
-        $.material.init();
-        $(document).ready( function() {
-            $('.dropdown-toggle').dropdown();
-        });
-
-        function menu_toggle() {
-            $("#wrapper").toggleClass("active");
-        }
-    </script>
 
     <script src="{% static 'susana/dist/js/alert.js' %}"></script>
 
@@ -164,18 +154,6 @@
 
     <!-- Shortcuts -->
     <script src="{% static 'susana/dist/js/mousetrap.min.js' %}"></script>
-    <script>
-        // atalhos
-        Mousetrap.bind('ctrl+5', function(e) {
-            window.location.assign('/clientes/');
-        });
-        Mousetrap.bind('ctrl+6', function(e) {
-            window.location.assign('/contas_receber/extratos');
-        });
-        Mousetrap.bind('ctrl+8', function(e) {
-            window.location.assign('/caixa');
-        });
-    </script>
 
     {% block footer %}{% endblock %}
   </body>
