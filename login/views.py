@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.contrib import messages
 
 """
@@ -77,3 +78,34 @@ Renderiza o template para cadastrar um novo usuário
 """
 def cadastro(request):
     return render(request, 'login/cadastro.html')
+
+"""
+Salva um novo usuário
+"""
+def salvar_usuario(request):
+    user = User()
+
+    # recebe os dados
+    user.first_name = request.POST['nome']
+    user.last_name = request.POST['sobrenome']
+    user.email = request.POST['email']
+    user.username = request.POST['usuario']
+    user.password = request.POST['senha']
+    senha_confirmacao = request.POST['senha_confirmacao']
+
+    # verifica se as senhas não são equivalentes
+    if user.password != senha_confirmacao:
+        # renderiza com mensagem de erro a tela de cadastro
+        messages.error(request, 'As senhas não são equivalentes!')
+        return render(request, 'login/cadastro.html', {'user': user})
+    else:
+        try:
+            # cria o usuário
+            user = User.objects.create_user(user.username, user.email, user.password, first_name=user.first_name, last_name=user.last_name)
+            user.save()
+
+            messages.success(request, 'Usuário salvo com sucesso!')
+            return index(request)
+        except:
+            messages.warning(request, "Nome de usuário indisponível!")
+            return render(request, 'login/cadastro.html', {'user': user})

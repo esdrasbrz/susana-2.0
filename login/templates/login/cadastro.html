@@ -63,7 +63,7 @@
                 <h3 class="h-title"><i class="material-icons">add_circle</i> Cadastro de Usuário</h3>
             </div>
 
-            <form action="" method="post" id="form">
+            <form action="{% url 'login:salvar_usuario' %}" method="post" id="form">
                 {% csrf_token %}
 
                 <div class="row">
