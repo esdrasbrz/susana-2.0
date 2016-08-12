@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 """
@@ -109,3 +110,10 @@ def salvar_usuario(request):
         except:
             messages.warning(request, "Nome de usuário indisponível!")
             return render(request, 'login/cadastro.html', {'user': user})
+
+"""
+Renderiza a tela para alterar login
+"""
+@login_required(login_url='/login/')
+def alterar_login(request):
+    return render(request, 'login/alterarLogin.html')

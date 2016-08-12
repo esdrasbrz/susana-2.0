@@ -9,4 +9,6 @@ urlpatterns = [
 
     url(r'^cadastro/$', views.cadastro, name='cadastro'),
     url(r'^cadastro/salvar/$', views.salvar_usuario, name='salvar_usuario'),
+
+    url(r'^alterar/$', views.alterar_login, name='alterar_login'),
 ]
