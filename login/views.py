@@ -135,6 +135,33 @@ def salvar_login(request):
 
     # verifica se deseja alterar senha
     if 'alterar_senha' in request.POST:
-        print('entrou')
+        # verifica se os campos não foram preenchidos
+        if not user.username or not user.password or not senha_confirmacao:
+            messages.warning(request, "Os campos de acesso devem ser preenchidos!")
+        elif senha_confirmacao != user.password: # senhas não condizentes
+            messages.error(request, 'As senhas não são equivalentes!')
+            return render(request, 'login/alterarLogin.html', {'user': user, 'alterar_senha': True})
+        else:
+            # seta a nova senha
+            user.set_password(user.password)
+
+            try:
+                # salva o usuario
+                user.save()
+
+                messages.success(request, "Usuário salvo com sucesso!")
+            except:
+                messages.error(request, "Nome de usuário indisponível!")
+
+        return render(request, 'login/alterarLogin.html', {'user': user, 'alterar_senha': True})
     else:
-        print("else")
+        # seta os novos campos no usuário da session
+        request.user.first_name = user.first_name
+        request.user.last_name = user.last_name
+        request.user.email = user.email
+
+        # salva o usuário e renderiza com sucesso
+        request.user.save()
+
+        messages.success(request, "Usuário salvo com sucesso!")
+        return render(request, 'login/alterarLogin.html')

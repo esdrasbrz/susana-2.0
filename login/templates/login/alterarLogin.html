@@ -28,7 +28,7 @@
             <div class="form-group col-md-12">
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" name="alterar_senha" id="alterar_senha">
+                        <input type="checkbox" name="alterar_senha" id="alterar_senha" {% if alterar_senha %}checked{% endif %}>
                         <span class="checkbox-material"></span>
                         Alterar Acesso
                     </label>
@@ -39,15 +39,15 @@
         <div class="row">
             <div class="form-group label-floating col-md-4">
                 <label for="usuario" class="control-label">Usuário</label>
-                <input name="usuario" id="usuario" class="form-control" {% if user.username %}value="{{ user.username }}"{% endif %} readonly>
+                <input name="usuario" id="usuario" class="form-control" {% if user.username %}value="{{ user.username }}"{% endif %} {% if not alterar_senha %}readonly{% endif %}>
             </div>
             <div class="form-group label-floating col-md-4">
                 <label for="senha" class="control-label">Senha</label>
-                <input type="password" name="senha" id="senha" class="form-control" readonly>
+                <input type="password" name="senha" id="senha" class="form-control" {% if not alterar_senha %}readonly{% endif %}>
             </div>
             <div class="form-group label-floating col-md-4">
                 <label for="senha_confirmacao" class="control-label">Confirmar Senha</label>
-                <input type="password" name="senha_confirmacao" id="senha_confirmacao" class="form-control" readonly>
+                <input type="password" name="senha_confirmacao" id="senha_confirmacao" class="form-control" {% if not alterar_senha %}readonly{% endif %}>
             </div>
         </div>
 
