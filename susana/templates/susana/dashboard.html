@@ -58,6 +58,7 @@
                 <li><a href="{% url 'login:alterar_login' %}"><i class="material-icons">update</i> Alterar Login...</a></li>
                 {% if user.is_superuser %}
                     <li><a href="{% url 'disciplinas:disciplinas' %}">Disciplinas...</a></li>
+                    <li><a href="{% url 'labs:labs' %}">Labs...</a></li>
                 {% endif %}
             </ul>
           <ul class="nav navbar-nav navbar-right">

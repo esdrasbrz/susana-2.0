@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .models import *
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
+from login.user_tests import *
+from django.db import transaction
 
 """
 Seleciona a disciplina e lista todos os Labs referentes a ela
@@ -36,3 +38,14 @@ def seleciona_submissao(request, submissao_id):
 
     # renderiza para a tela de detalhes
     return render(request, 'labs/detalhes_submissao.html', {"submissao": submissao})
+
+
+"""
+Lista todos os labs
+"""
+@login_required(login_url='/login/')
+@user_passes_test(is_superuser, login_url='/login/')
+def labs(request):
+    labs = Labs.objects.all()
+
+    return render(request, 'labs/labs.html', {'admin': True})
