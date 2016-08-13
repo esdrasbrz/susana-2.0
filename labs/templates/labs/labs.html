@@ -76,7 +76,20 @@
                 var id = table.row(this).data()[0];
 
                 // envia o dado ao seleicona lab
-                window.location.href = "/labs/seleciona_lab/" + id + "/";
+                {% if admin %}
+                    $.ajax({
+                        url: "{% url 'labs:seleciona_lab_alterar' %}",
+                        data: {
+                            id: id
+                        },
+                        success: function (html) {
+                            $('#alterarDialogContent').html(html); // seta o corpo do dialogo alterar
+                            $('#triggerAlterarDialog').click(); // abre o dialogo
+                        }
+                    });
+                {% else %}
+                    window.location.href = "/labs/seleciona_lab/" + id + "/";
+                {% endif %}
             });
         });
 

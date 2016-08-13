@@ -86,3 +86,20 @@ def salvar_lab(request):
     # retorna para a listagem de labs
     messages.success(request, 'Lab salvo com sucesso!')
     return labs(request)
+
+"""
+Seleciona o lab para fazer alterações
+"""
+@login_required(login_url='/login/')
+@user_passes_test(is_superuser, login_url='/login/')
+def seleciona_lab_alterar(request):
+    # recebe o id como parâmetro
+    id = request.GET['id']
+
+    # procura o lab
+    lab = Labs.objects.get(pk=id)
+    # lista as disciplinas
+    disciplinas = Disciplinas.objects.all()
+
+    # renderiza a página de alteração
+    return render(request, 'labs/alterarLab.html', {"lab": lab, "disciplinas": disciplinas})

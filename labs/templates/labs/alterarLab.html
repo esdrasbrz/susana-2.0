@@ -44,7 +44,7 @@
             </div>
             <div class="form-group label-floating col-md-10">
                 <label for="url_testes" class="control-label">URL Testes</label>
-                <input name="url_testes" id="url_testes" class="form-control">
+                <input name="url_testes" id="url_testes" class="form-control" {% if not novo_lab %}disabled{% endif %}>
             </div>
         </div>
 
