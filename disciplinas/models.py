@@ -5,7 +5,7 @@ Tabela de disciplinas
 """
 class Disciplinas(models.Model):
     codigo = models.CharField(max_length=5)
-    turma = models.CharField(max_length=2)
+    turma = models.CharField(max_length=10)
 
     descricao = models.CharField(max_length=100, null=True)
 

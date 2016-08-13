@@ -17,9 +17,21 @@
                 <label for="id" class="control-label">ID</label>
                 <input name="id" id="id" class="form-control" {% if lab.id %}value="{{ lab.id }}"{% endif %} readonly>
             </div>
-            <div class="form-group label-floating col-md-10">
+            <div class="form-group label-floating col-md-7">
                 <label for="nome" class="control-label">Nome (*)</label>
                 <input name="nome" id="nome" class="form-control" {% if lab.nome %}value="{{ lab.nome }}" readonly{% endif %} maxlength="50" required oninvalid="this.setCustomValidity('Campo requerido')" onchange="try{setCustomValidity('')}catch(e){}">
+            </div>
+            <div class="form-group label-floating col-md-3">
+                <label for="disciplina" class="control-label">Disciplina (*)</label>
+                <select id="disciplina" name="disciplina" class="form-control">
+                    {% for disciplina in disciplinas %}
+                        <option value="{{ disciplina.id }}" {% if lab.disciplina_id == disciplina.id %}
+                                selected disabled
+                        {% endif %}>
+                            {{ disciplina }}
+                        </option>
+                    {% endfor %}
+                </select>
             </div>
         </div>
 

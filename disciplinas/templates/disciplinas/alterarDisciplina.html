@@ -23,7 +23,7 @@
             </div>
             <div class="form-group label-floating col-md-2">
                 <label for="turma" class="control-label">Turma (*)</label>
-                <input name="turma" id="turma" class="form-control" onkeyup="to_upper(this);" {% if disciplina.turma %}value="{{ disciplina.turma }}" readonly{% endif %} maxlength="2" required oninvalid="this.setCustomValidity('Campo requerido')" onchange="try{setCustomValidity('')}catch(e){}">
+                <input name="turma" id="turma" class="form-control" onkeyup="to_upper(this);" {% if disciplina.turma %}value="{{ disciplina.turma }}" readonly{% endif %} maxlength="10" required oninvalid="this.setCustomValidity('Campo requerido')" onchange="try{setCustomValidity('')}catch(e){}">
             </div>
         </div>
 
