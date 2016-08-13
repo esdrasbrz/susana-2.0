@@ -80,7 +80,6 @@
 <script>
     $("#btExcluir").click(function() {
         // submete o form para excluir
-        $("#form").attr("action", "{% url 'disciplinas:excluir_disciplina' %}");
-        $("#form").submit();
+        $("#form").attr("action", "{% url 'labs:excluir_lab' %}").submit();
     });
 </script>

@@ -103,3 +103,22 @@ def seleciona_lab_alterar(request):
 
     # renderiza a página de alteração
     return render(request, 'labs/alterarLab.html', {"lab": lab, "disciplinas": disciplinas})
+
+"""
+Exclui um lab e seus arquivos
+"""
+@login_required(login_url='/login/')
+@user_passes_test(is_superuser, login_url='/login/')
+@transaction.atomic
+def excluir_lab(request):
+    # recebe o lab
+    lab = Labs.objects.get(pk=request.POST['id'])
+
+    # apaga os arquivos do lab
+    apaga_lab(str(lab.disciplina), str(lab))
+    # apaga do BD
+    lab.delete()
+
+    # retorna para listar os labs
+    messages.success(request, 'Lab excluído com sucesso!')
+    return labs(request)
