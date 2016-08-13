@@ -9,4 +9,5 @@ urlpatterns = [
 
     url(r'^$', views.labs, name='labs'),
     url(r'^novo/$', views.novo_lab, name='novo_lab'),
+    url(r'^novo/salvar/$', views.salvar_lab, name='salvar_lab'),
 ]
