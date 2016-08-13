@@ -35,6 +35,28 @@
             {% endfor %}
         </table>
     </div>
+
+    {% if admin %}
+        <hr>
+
+        <div class="row">
+            <button class="btn btn-default" type="button" onclick="on_click_novo()"><i class="material-icons">add_circle</i> Novo</button>
+        </div>
+
+        <!-- diálogos de alteração e inserção -->
+
+        <!-- botão trigger modal -->
+        <button id="triggerAlterarDialog" type="button" data-toggle="modal" data-target="#alterarDialog" style="visibility: hidden">
+        </button>
+
+        <!-- Diálogos -->
+        <div class="modal fade" id="alterarDialog" tabindex="-1" role="dialog" aria-labelledby="alterarDialogLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div id="alterarDialogContent" class="modal-content">
+                </div>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block footer %}
@@ -57,5 +79,19 @@
                 window.location.href = "/labs/seleciona_lab/" + id + "/";
             });
         });
+
+        {% if admin %}
+            // evento onclick do botão novo
+            function on_click_novo() {
+                // chama o metodo para novo lab
+                $.ajax({
+                    url: "{% url 'labs:novo_lab' %}",
+                    success: function (html) {
+                        $('#alterarDialogContent').html(html); // seta o corpo do dialogo alterar
+                        $('#triggerAlterarDialog').click(); // abre o dialogo
+                    }
+                })
+            }
+        {% endif %}
     </script>
 {% endblock %}

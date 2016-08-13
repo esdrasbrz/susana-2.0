@@ -1,0 +1,74 @@
+<form action="{% url 'disciplinas:salvar_disciplina' %}" method="post" id="form">
+    {% csrf_token %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="material-icons">close</i></button>
+        <h3 class="modal-title h-title" id="alterarDialogLabel">
+            {% if novo_lab %}
+                <i class="material-icons">add_circle</i> Novo Lab
+            {% else %}
+                <i class="material-icons">update</i> Alterar Lab
+            {% endif %}
+        </h3>
+    </div>
+
+    <div id="alterarDialogBody" class="modal-body">
+        <div class="row">
+            <div class="form-group label-floating col-md-2">
+                <label for="id" class="control-label">ID</label>
+                <input name="id" id="id" class="form-control" {% if lab.id %}value="{{ lab.id }}"{% endif %} readonly>
+            </div>
+            <div class="form-group label-floating col-md-10">
+                <label for="nome" class="control-label">Nome (*)</label>
+                <input name="nome" id="nome" class="form-control" {% if lab.nome %}value="{{ lab.nome }}" readonly{% endif %} maxlength="50" required oninvalid="this.setCustomValidity('Campo requerido')" onchange="try{setCustomValidity('')}catch(e){}">
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="form-group label-floating col-md-2">
+                <label for="qtd_testes" class="control-label">Qtd. Testes</label>
+                <input name="qtd_testes" id="qtd_testes" class="form-control" onkeyup="so_numeros_input(this)" {% if lab.qtd_testes %}value="{{ lab.qtd_testes }}" readonly{% endif %}>
+            </div>
+            <div class="form-group label-floating col-md-10">
+                <label for="url_testes" class="control-label">URL Testes</label>
+                <input name="url_testes" id="url_testes" class="form-control" value="http://">
+            </div>
+        </div>
+
+
+        <!-- Diálogo para confirmação de exclusão -->
+        <div id="confirmModal" class="modal fade">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Você tem certeza que quer excluir o lab '{{ lab }}'?</h3>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="btExcluir"><i class="material-icons">delete</i> Excluir</button>
+                        <button type="button" data-dismiss="modal" class="btn btn-default"><i class="material-icons">cancel</i> Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="material-icons">cancel</i> Cancelar</button>
+        {% if novo_lab %}
+            <button type="submit" class="btn btn-primary"  id="btSalvar">
+                <i class="material-icons">save</i> Salvar
+            </button>
+        {% else %}
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmModal"><i class="material-icons">delete</i> Excluir</button>
+        {% endif %}
+    </div>
+</form>
+
+<script>
+    $("#btExcluir").click(function() {
+        // submete o form para excluir
+        $("#form").attr("action", "{% url 'disciplinas:excluir_disciplina' %}");
+        $("#form").submit();
+    });
+</script>

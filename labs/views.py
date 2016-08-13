@@ -49,3 +49,11 @@ def labs(request):
     labs = Labs.objects.all()
 
     return render(request, 'labs/labs.html', {'admin': True})
+
+"""
+Cria um novo lab
+"""
+@login_required(login_url='/login/')
+@user_passes_test(is_superuser, login_url='/login/')
+def novo_lab(request):
+    return render(request, 'labs/alterarLab.html', {"novo_lab": True})

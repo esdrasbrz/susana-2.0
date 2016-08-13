@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^seleciona_submissao/(?P<submissao_id>[0-9]+)/$', views.seleciona_submissao, name='seleciona_submissao'),
 
     url(r'^$', views.labs, name='labs'),
+    url(r'^novo/$', views.novo_lab, name='novo_lab'),
 ]
