@@ -99,6 +99,10 @@ def cria_lab(disciplina, lab, url_testes, qtd_testes):
     # define o path testes
     path_testes = path_lab + "testes/"
 
+    # coloca barra no fim da url teste caso não exista
+    if url_testes[-1] != '/':
+        url_testes += '/'
+
     # realiza o download dos arquivos de teste
     for i in range(1, qtd_testes+1):
         os.system("cd %s && curl -O -k %sarq%02d.in" %(path_testes, url_testes, i)) # entrada
