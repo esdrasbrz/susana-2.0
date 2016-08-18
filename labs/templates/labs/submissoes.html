@@ -53,6 +53,21 @@
     <script src="{% static 'susana/dist/js/dataTables.datetime-eu.js' %}"></script>
 
     <script>
+        // função que envia por ajax para selecionar submissão
+        function seleciona_submissao(id) {
+            // envia o dado ao seleciona submissao
+            $.ajax({
+                url: "{% url 'labs:seleciona_submissao' %}",
+                data: {
+                    id: id
+                },
+                success: function (html) {
+                    $('#alterarDialogContent').html(html); // seta o corpo do dialogo alterar
+                    $('#triggerAlterarDialog').click(); // abre o dialogo
+                }
+            });
+        }
+
         $(document).ready(function() {
             var table = $('#table-submissoes').DataTable({
                 "language": {
@@ -67,18 +82,7 @@
             // evento onclick da tabela
             $('#table-submissoes tbody').on('click', 'tr', function() {
                 var id = table.row(this).data()[0];
-
-                // envia o dado ao seleciona submissao
-                $.ajax({
-                    url: "{% url 'labs:seleciona_submissao' %}",
-                    data: {
-                        id: id
-                    },
-                    success: function (html) {
-                        $('#alterarDialogContent').html(html); // seta o corpo do dialogo alterar
-                        $('#triggerAlterarDialog').click(); // abre o dialogo
-                    }
-                });
+                seleciona_submissao(id);
             });
         });
 
@@ -86,5 +90,11 @@
             // redireciona para a tela de submissão para esse lab
             window.location.href = "{% url 'labs:nova_submissao' lab.id %}";
         }
+
+        // verifica se é pra exibir alguma submissão
+        {% if exibir_submissao %}
+            // envia o comando para exibir submissão
+            seleciona_submissao({{ id_submissao }});
+        {% endif %}
     </script>
 {% endblock %}

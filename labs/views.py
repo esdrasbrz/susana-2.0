@@ -117,7 +117,11 @@ def submeter(request, lab_id):
     submissao.save()
 
     # redireciona para a listagem de submissões
-    return seleciona_lab(request, lab_id)
+    # procura as submissoes
+    submissoes = lab.submissoes_set.filter(user_id=request.user.id).all()
+
+    # renderiza para a tela de submissões
+    return render(request, 'labs/submissoes.html', {'lab': lab, 'submissoes': submissoes, 'exibir_submissao': True, 'id_submissao': submissao.id})
 
 """
 Lista todos os labs
