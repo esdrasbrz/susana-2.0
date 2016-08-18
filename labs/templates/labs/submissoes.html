@@ -27,6 +27,12 @@
             {% endfor %}
         </table>
     </div>
+
+    <hr>
+
+    <div class="row">
+        <button class="btn btn-default" type="button" onclick="on_click_submeter()"><i class="material-icons">cloud_upload</i> Submeter</button>
+    </div>
 {% endblock %}
 
 {% block footer %}
@@ -53,5 +59,10 @@
                 window.location.href = "/labs/seleciona_submissao/" + id + "/";
             });
         });
+
+        function on_click_submeter() {
+            // redireciona para a tela de submissão para esse lab
+            window.location.href = "{% url 'labs:nova_submissao' lab.id %}";
+        }
     </script>
 {% endblock %}

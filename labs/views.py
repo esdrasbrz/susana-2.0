@@ -41,6 +41,16 @@ def seleciona_submissao(request, submissao_id):
     # renderiza para a tela de detalhes
     return render(request, 'labs/detalhes_submissao.html', {"submissao": submissao})
 
+"""
+Redireciona para a página para realizar nova submissão
+"""
+@login_required(login_url='/login/')
+def nova_submissao(request, lab_id):
+    # busca o lab
+    lab = Labs.objects.get(pk=lab_id)
+
+    # renderiza para a tela de detalhes
+    return render(request, 'labs/submeter.html', {"lab": lab})
 
 """
 Lista todos os labs
