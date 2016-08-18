@@ -61,13 +61,6 @@ def testar(disciplina, lab, username, num_teste):
 
     return diff
 
-# Apaga o executavel e o codigo fonte dos arquivos
-def limpar(session_id, disciplina, lab):
-    # seta o path
-    path = SUSANA_FILES + disciplina + "/" + lab + "/"
-    # apaga os arquivos
-    os.system("cd %s && rm %s && rm -rf %s" %(path, session_id + ".out", session_id))
-
 # cria o diretorio da disciplina
 def cria_disciplina(disciplina):
     # realiza o mkdir

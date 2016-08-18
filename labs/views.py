@@ -58,6 +58,7 @@ def nova_submissao(request, lab_id):
 Submete os arquivos .c e .h
 """
 @login_required(login_url='/login/')
+@transaction.atomic
 def submeter(request, lab_id):
     # busca o lab
     lab = Labs.objects.get(pk=lab_id)
@@ -85,6 +86,7 @@ def submeter(request, lab_id):
 
     # string com as linhas de saida dos testes
     output_testes = ""
+    qtd_testes_corretos = 0 # contador de testes corretos
     # verifica se não houve erro de compilação para realizar os testes
     if output_compilacao.lower().count('error') == 0:
         # percorre todos os testes
@@ -94,12 +96,27 @@ def submeter(request, lab_id):
             # verifica se o teste foi ok
             if saida == '':
                 output_testes += "%02d: OK!\n" % (i + 1)
+                qtd_testes_corretos += 1
             else:
                 # exibe as linhas separadamente
-                output_testes.append("%02d:\n%s\n" %(i + 1, saida))
+                output_testes += "%02d:\n%s\n" %(i + 1, saida)
 
     # deleta o diretório do usuário
     os.system("rm -r %s" % (path))
+
+    # cria a submissão no BD
+    submissao = Submissoes()
+    submissao.lab_id = lab_id
+    submissao.user_id = request.user.id
+    submissao.qtd_testes_corretos = qtd_testes_corretos
+    submissao.output_compilacao = output_compilacao
+    submissao.output_testes = output_testes
+
+    # salva no BD
+    submissao.save()
+
+    # redireciona para a listagem de submissões
+    return seleciona_lab(request, lab_id)
 
 """
 Lista todos os labs
