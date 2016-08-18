@@ -74,10 +74,10 @@ body {
 .main {
   padding: 20px;
 }
-@media (min-width: 768px) {
+@media (min-width: 600px) {
   .main {
-    padding-right: 40px;
-    padding-left: 40px;
+    padding-right: 150px;
+    padding-left: 150px;
   }
 }
 .main .page-header {
