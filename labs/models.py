@@ -25,10 +25,11 @@ class Submissoes(models.Model):
     data_submissao = models.DateTimeField(auto_now_add=True)
     qtd_testes_corretos = models.IntegerField()
 
-    detalhes = models.TextField()
+    output_compilacao = models.TextField(null=True)
+    output_testes = models.TextField(null=True)
 
     def get_linhas_detalhes(self):
         return self.detalhes.split('\n')
 
     class Meta:
-        ordering = ['data_submissao']
+        ordering = ['-data_submissao']

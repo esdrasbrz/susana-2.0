@@ -69,6 +69,7 @@ def submeter(request, lab_id):
     # cria um diretório com o usuário
     os.system("mkdir %s" % (path))
 
+    # percorre os arquivos para fazer o upload
     for file in request.FILES.getlist('arquivos'):
         # verifica se o arquivo termina em .c ou .h
         if file.name[-2:] == '.c' or file.name[-2:] == '.h':
@@ -80,25 +81,22 @@ def submeter(request, lab_id):
                 output.write(str(file.read(), 'UTF-8'))
 
     # compila os arquivos
-    output_compilacao = compilar(arquivos, str(lab.disciplina), str(lab), request.user.username).split('\n')
+    output_compilacao = compilar(arquivos, str(lab.disciplina), str(lab), request.user.username)
 
-    # lista com as linhas de saida dos testes
-    output_testes = []
+    # string com as linhas de saida dos testes
+    output_testes = ""
     # verifica se não houve erro de compilação para realizar os testes
-    if '\n'.join(output_compilacao).lower().count('error') == 0:
+    if output_compilacao.lower().count('error') == 0:
         # percorre todos os testes
         for i in range(lab.qtd_testes):
             saida = testar(str(lab.disciplina), str(lab), request.user.username, i + 1)
 
             # verifica se o teste foi ok
             if saida == '':
-                output_testes.append("%02d: OK!" % (i+1))
+                output_testes += "%02d: OK!\n" % (i + 1)
             else:
                 # exibe as linhas separadamente
-                output_testes.append("%02d:" % (i+1))
-                output_testes += saida.split('\n')
-
-            output_testes.append("")
+                output_testes.append("%02d:\n%s\n" %(i + 1, saida))
 
     # deleta o diretório do usuário
     os.system("rm -r %s" % (path))
