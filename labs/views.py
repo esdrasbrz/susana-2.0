@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from login.user_tests import *
 from django.db import transaction
 from utils.arquivos import *
+from django.conf import settings
+import os
 
 """
 Seleciona a disciplina e lista todos os Labs referentes a ela
@@ -51,6 +53,55 @@ def nova_submissao(request, lab_id):
 
     # renderiza para a tela de detalhes
     return render(request, 'labs/submeter.html', {"lab": lab})
+
+"""
+Submete os arquivos .c e .h
+"""
+@login_required(login_url='/login/')
+def submeter(request, lab_id):
+    # busca o lab
+    lab = Labs.objects.get(pk=lab_id)
+
+    # path no qual os arquivos serão salvos
+    path = "%s/susana-files/%s/%s/%s/" % (settings.BASE_DIR, str(lab.disciplina), str(lab), request.user.username)
+    arquivos = [] # lista com os nomes dos arquivos upados
+
+    # cria um diretório com o usuário
+    os.system("mkdir %s" % (path))
+
+    for file in request.FILES.getlist('arquivos'):
+        # verifica se o arquivo termina em .c ou .h
+        if file.name[-2:] == '.c' or file.name[-2:] == '.h':
+            # salva o nome do arquivo se terminar em .c
+            if file.name[-2:] == '.c': arquivos.append(file.name)
+
+            # salva os arquivos no diretório desse usuário
+            with open(path + file.name, 'w') as output:
+                output.write(str(file.read(), 'UTF-8'))
+
+    # compila os arquivos
+    output_compilacao = compilar(arquivos, str(lab.disciplina), str(lab), request.user.username).split('\n')
+
+    # lista com as linhas de saida dos testes
+    output_testes = []
+    # verifica se não houve erro de compilação para realizar os testes
+    if '\n'.join(output_compilacao).lower().count('error') == 0:
+        # percorre todos os testes
+        for i in range(lab.qtd_testes):
+            saida = testar(str(lab.disciplina), str(lab), request.user.username, i + 1)
+
+            # verifica se o teste foi ok
+            if saida == '':
+                output_testes.append("%02d: OK!" % (i+1))
+            else:
+                # exibe as linhas separadamente
+                output_testes.append("%02d:" % (i+1))
+                output_testes += saida.split('\n')
+
+            output_testes.append("")
+
+    # deleta o diretório do usuário
+    os.system("rm -r %s" % (path))
 
 """
 Lista todos os labs

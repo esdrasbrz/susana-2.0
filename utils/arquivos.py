@@ -18,45 +18,36 @@ def new_user(session_id, disciplina, lab):
     os.system("cd %s && mkdir %s" %(path, session_id))
 
 # Compila o programa e retorna caso ocorra algum erro ou warning
-def compilar(fileName, disciplina, lab, session_id):
+def compilar(arquivos, disciplina, lab, username):
     # seta o path
-    path = SUSANA_FILES + disciplina + "/" + lab + "/"
+    path = SUSANA_FILES + disciplina + "/" + lab + "/" + username + "/"
 
     filtro = re.compile(r'(;\s|\b)(system|exec(.|..|))\(')
 
     # verifica os arquivos fonte
-    for arq in fileName.split(' '):
-        if arq != "":
-            # abre o arquivo
-            arquivo = open(arq, 'r')
-            fonte = arquivo.read()
-            arquivo.close()
+    for arq in arquivos:
+        # abre o arquivo
+        arquivo = open(path + arq, 'r')
+        fonte = arquivo.read()
+        arquivo.close()
 
-            # verifica se tem um comando do sistema
-            if filtro.search(fonte) is not None:
-                return u"error: Você não tem permissão para executar um comando do sistema"
+        # verifica se tem um comando do sistema
+        if filtro.search(fonte) is not None:
+            return u"error: Você não tem permissão para executar um comando do sistema!"
 
-    ret = subprocess.getoutput("gcc -std=c99 -pedantic -Wall -lm %s -o %s" %(fileName, path+session_id+".out"))
+    ret = subprocess.getoutput("cd %s && gcc -std=c99 -pedantic -Wall -lm %s -o %s" %(path, " ".join(arquivos), username + ".out"))
 
     return ret
 
-# Seta as permissoes para o executavel
-def set_permissao(fileName, disciplina, lab):
-    # seta o path
-    path = SUSANA_FILES + disciplina + "/" + lab + "/"
-
-    os.system("chmod a-x %s" %(path+fileName+".out"))
-    os.system("chmod u+x %s" %(path+fileName+".out"))
-
 # Executa o programa e compara o arquivo, retornando o resultado
-def testar(fileName, disciplina, lab, num):
+def testar(disciplina, lab, username, num_teste):
     # seta os paths
     path = SUSANA_FILES + disciplina + "/" + lab + "/"
     path_testes = path + "testes/"
-    path_out = path + "out/"
+    path += username + "/"
 
-    # executa e salva a saida. Se o retorno for maior que 100, ele da timeout
-    ret = os.system("cd %s && timeout 5 ./%s <%sarq%02d.in >%sarq%02d" %(path, fileName+".out", path_testes, int(num), path_out + fileName, int(num)))
+    # executa e salva a saida.
+    ret = os.system("cd %s && timeout 5 ./%s <%sarq%02d.in >%sarq%02d.out" %(path, username + ".out", path_testes, int(num_teste), path, int(num_teste)))
 
     # Timeout retorna 124
     if (ret == 124):
@@ -66,10 +57,7 @@ def testar(fileName, disciplina, lab, num):
         return "Segmentation fault!"
 
     # compara a saida
-    diff = subprocess.getoutput("diff %sarq%02d %sarq%02d.res" %(path_out + fileName, int(num), path_testes, int(num)))
-
-    # apagar o arquivo de saida
-    os.system("cd %s && rm %sarq%02d" %(path_out, fileName, int(num)))
+    diff = subprocess.getoutput("diff %sarq%02d.out %sarq%02d.res" %(path, int(num_teste), path_testes, int(num_teste)))
 
     return diff
 

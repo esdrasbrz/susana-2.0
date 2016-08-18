@@ -7,7 +7,8 @@
         <h3 class="h-title">Submeter - {{ lab }}...</h3>
     </div>
 
-    <form action="" method="post" role="form">
+    <form action="{% url 'labs:submeter' lab.id %}" method="post" role="form" enctype="multipart/form-data">
+        {% csrf_token %}
     	<div class="form-group">
     		<label for="arquivos" class="control-label" style="font-size: 30px;">Selecione o(s) arquivo(s)...</label>
     		<input type="file" class="form-control" name="arquivos" id="arquivos" multiple>

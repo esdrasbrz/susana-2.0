@@ -14,4 +14,5 @@ urlpatterns = [
     url(r'^excluir/$', views.excluir_lab, name='excluir_lab'),
 
     url(r'^seleciona_lab/(?P<lab_id>[0-9]+)/novo/$', views.nova_submissao, name='nova_submissao'),
+    url(r'^seleciona_lab/(?P<lab_id>[0-9]+)/submeter/$', views.submeter, name='submeter'),
 ]
