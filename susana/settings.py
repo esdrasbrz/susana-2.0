@@ -137,7 +137,7 @@ STATICFILES_DIRS = [
 
 # Configuração de data
 DATE_FORMAT = 'd/m/Y'
-DATETIME_FORMAT = 'd/m/Y - H:m'
+DATETIME_FORMAT = 'd/m/Y - H:i'
 DATE_INPUT_FORMATS = (
     '%d/%m/%Y',
 )

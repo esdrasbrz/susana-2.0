@@ -28,8 +28,10 @@ class Submissoes(models.Model):
     output_compilacao = models.TextField(null=True)
     output_testes = models.TextField(null=True)
 
-    def get_linhas_detalhes(self):
-        return self.detalhes.split('\n')
+    def get_linhas_compilacao(self):
+        return self.output_compilacao.split('\n')
+    def get_linhas_testes(self):
+        return self.output_testes.split('\n')
 
     class Meta:
         ordering = ['-data_submissao']

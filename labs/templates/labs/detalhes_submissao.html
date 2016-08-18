@@ -1,52 +1,39 @@
-{% extends 'susana/dashboard.html' %}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="material-icons">close</i></button>
+    <h3 class="modal-title h-title" id="alterarDialogLabel">{{ submissao.lab }} - {{ submissao.lab.disciplina }} - Detalhes de Submissão {{ submissao.data_submissao }}...</h3>
+</div>
+<hr>
 
-{% load staticfiles %}
-
-{% block head %}
-    <link rel="stylesheet" type="text/css" href="{% static 'susana/dist/css/dataTables.bootstrap.min.css' %}" />
-{% endblock %}
-
-{% block content %}
-    <div class="page-header">
-        <h3 class="h-title">{{ submissao.lab }} - {{ submissao.lab.disciplina }} - Detalhes de Submissão {{ submissao.data_submissao }}...</h3>
+<div class="row">
+    <div class="col-md-12">
+        <h4>Testes corretos: {{ submissao.qtd_testes_corretos }}/{{ submissao.lab.qtd_testes }}</h4>
     </div>
+</div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <h4>Testes corretos: {{ submissao.qtd_testes_corretos }}/{{ submissao.lab.qtd_testes }}</h4>
-        </div>
-    </div>
+<hr>
 
-    <hr>
-
-    {% for linha in submissao.get_linhas_detalhes %}
-        <div class="row">
-            <div class="col-md-12">
-                <h4>{{ linha }}</h4>
+<div class="panel panel-primary">
+    <div class="panel-heading">Compilação</div>
+    <div class="panel-body">
+        {% for linha in submissao.get_linhas_compilacao %}
+            <div class="row">
+                <div class="col-md-12">
+                    <h5>{{ linha }}</h5>
+                </div>
             </div>
-        </div>
-    {% endfor %}
-{% endblock %}
-
-{% block footer %}
-    <script src="{% static 'susana/dist/js/jquery.dataTables.min.js' %}"></script>
-    <script src="{% static 'susana/dist/js/dataTables.bootstrap.min.js' %}"></script>
-
-    <script>
-        $(document).ready(function() {
-            var table = $('#table-labs').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese.json"
-                }
-            });
-
-            // evento onclick da tabela
-            $('#table-labs tbody').on('click', 'tr', function() {
-                var id = table.row(this).data()[0];
-
-                // envia o dado ao seleicona lab
-                window.location.href = "/labs/seleciona_lab/" + id + "/";
-            });
-        });
-    </script>
-{% endblock %}
+        {% endfor %}
+    </div>
+</div>
+<br>
+<div class="panel panel-primary">
+    <div class="panel-heading">Testes</div>
+    <div class="panel-body">
+        {% for linha in submissao.get_linhas_testes %}
+            <div class="row">
+                <div class="col-md-12">
+                    <h5>{{ linha }}</h5>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

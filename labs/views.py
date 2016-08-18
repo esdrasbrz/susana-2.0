@@ -36,8 +36,9 @@ def seleciona_lab(request, lab_id):
 Seleciona a submissão para exibir os detalhes
 """
 @login_required(login_url='/login/')
-def seleciona_submissao(request, submissao_id):
+def seleciona_submissao(request):
     # busca a submissão
+    submissao_id = request.GET['id']
     submissao = Submissoes.objects.get(pk=submissao_id)
 
     # renderiza para a tela de detalhes
