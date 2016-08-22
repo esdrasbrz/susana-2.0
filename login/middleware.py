@@ -10,10 +10,8 @@ class AutoLogout:
             try:
                 # verifica se ultrapassou o limite de tempo
                 if datetime.now() - request.session['last_touch'] > timedelta(0, settings.AUTO_LOGOUT_DELAY * 60, 0):
-                    # desloga o usuario
-                    auth.logout(request)
-
-                    del request.session['last_touch']
+                    # apaga a session do usuário
+                    request.session.flush()     
                     return
             except KeyError:
                 pass
