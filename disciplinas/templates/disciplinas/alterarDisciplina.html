@@ -19,11 +19,11 @@
             </div>
             <div class="form-group label-floating col-md-5">
                 <label for="codigo" class="control-label">Código (*)</label>
-                <input name="codigo" id="codigo" class="form-control" onkeyup="to_upper(this);" {% if disciplina.codigo %}value="{{ disciplina.codigo }}" readonly{% endif %} maxlength="5" required oninvalid="this.setCustomValidity('Campo requerido')" onchange="try{setCustomValidity('')}catch(e){}">
+                <input name="codigo" id="codigo" class="form-control" onkeyup="to_upper(this);" {% if disciplina.codigo %}value="{{ disciplina.codigo }}" readonly{% endif %} maxlength="5" required >
             </div>
             <div class="form-group label-floating col-md-5">
                 <label for="turma" class="control-label">Turma (*)</label>
-                <input name="turma" id="turma" class="form-control" onkeyup="to_upper(this);" {% if disciplina.turma %}value="{{ disciplina.turma }}" readonly{% endif %} maxlength="10" required oninvalid="this.setCustomValidity('Campo requerido')" onchange="try{setCustomValidity('')}catch(e){}">
+                <input name="turma" id="turma" class="form-control" onkeyup="to_upper(this);" {% if disciplina.turma %}value="{{ disciplina.turma }}" readonly{% endif %} maxlength="10" required >
             </div>
         </div>
 
