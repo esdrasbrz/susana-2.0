@@ -48,6 +48,17 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="form-group label-floating col-md-6">
+                <label for="ext_entrada" class="control-label">Extensão Entrada</label>
+                <input name="ext_entrada" id="ext_entrada" class="form-control" {% if lab %}readonly{% endif %}>
+            </div>
+            <div class="form-group label-floating col-md-6">
+                <label for="ext_saida" class="control-label">Extensão Saída</label>
+                <input name="ext_saida" id="ext_saida" class="form-control" {% if lab %}readonly{% endif %}>
+            </div>
+        </div>
+
 
         <!-- Diálogo para confirmação de exclusão -->
         <div id="confirmModal" class="modal fade">

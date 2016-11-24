@@ -161,8 +161,11 @@ def salvar_lab(request):
     # seta url para baixar testes
     url_testes = request.POST['url_testes']
 
+    # recebe as extensões de entrada e saida
+    ext_entrada, ext_saida = request.POST['ext_entrada'], request.POST['ext_saida']
+
     # cria o lab e baixa os testes
-    cria_lab(str(disciplina), str(lab), url_testes, int(lab.qtd_testes))
+    cria_lab(str(disciplina), str(lab), url_testes, int(lab.qtd_testes), ext_entrada, ext_saida)
 
     # retorna para a listagem de labs
     messages.success(request, 'Lab salvo com sucesso!')

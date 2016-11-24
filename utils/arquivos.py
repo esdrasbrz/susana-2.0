@@ -67,7 +67,7 @@ def cria_disciplina(disciplina):
     os.system("cd %s && mkdir %s" %(SUSANA_FILES, disciplina))
 
 # cria o diretorio do lab dentro da disciplina correspondente
-def cria_lab(disciplina, lab, url_testes, qtd_testes):
+def cria_lab(disciplina, lab, url_testes, qtd_testes, ext_entrada, ext_saida):
     # realia o mkdir
     os.system("cd %s && mkdir %s" %(SUSANA_FILES + disciplina + "/", lab))
 
@@ -86,8 +86,8 @@ def cria_lab(disciplina, lab, url_testes, qtd_testes):
 
     # realiza o download dos arquivos de teste
     for i in range(1, qtd_testes+1):
-        os.system("cd %s && curl -O -k %sarq%02d.in" %(path_testes, url_testes, i)) # entrada
-        os.system("cd %s && curl -O -k %sarq%02d.res" %(path_testes, url_testes, i)) # saida
+        os.system("cd %s && curl -k %sarq%02d.%s > arq%02d.in" %(path_testes, url_testes, i, ext_entrada, i)) # entrada
+        os.system("cd %s && curl -k %sarq%02d.%s > arq%02d.res" %(path_testes, url_testes, i, ext_saida, i)) # saida
 
 # apaga os diretórios e arquivos do lab
 def apaga_lab(disciplina, lab):
