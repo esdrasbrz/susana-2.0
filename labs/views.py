@@ -63,6 +63,14 @@ Submete os arquivos .c e .h
 def submeter(request, lab_id):
     # busca o lab
     lab = Labs.objects.get(pk=lab_id)
+    # verifica a linguagem
+    linguagem = request.POST['linguagem']
+
+    # funções para validar o nome do arquivo com base na linguagem
+    validar = {
+        'c': lambda nome: nome[-2:] == '.c' or nome[-2:] == '.h',
+        'python': lambda nome: nome[-3:] == '.py'
+    }
 
     # path no qual os arquivos serão salvos
     path = "%s/susana-files/%s/%s/%s/" % (settings.BASE_DIR, str(lab.disciplina), str(lab), request.user.username)
@@ -73,26 +81,38 @@ def submeter(request, lab_id):
 
     # percorre os arquivos para fazer o upload
     for file in request.FILES.getlist('arquivos'):
-        # verifica se o arquivo termina em .c ou .h
-        if file.name[-2:] == '.c' or file.name[-2:] == '.h':
-            # salva o nome do arquivo se terminar em .c
-            if file.name[-2:] == '.c': arquivos.append(file.name)
+        # verifica se o arquivo termina em .c ou .h para linguagem C ou .py para python
+        if validar[linguagem](file.name):
+            # salva o nome do arquivo se não terminar em .h
+            if file.name[-2:] != '.h':
+                arquivos.append(file.name)
 
             # salva os arquivos no diretório desse usuário
             with open(path + file.name, 'w') as output:
                 output.write(str(file.read(), 'UTF-8'))
 
-    # compila os arquivos
-    output_compilacao = compilar(arquivos, str(lab.disciplina), str(lab), request.user.username)
+    # compila os arquivos se for linguagem c
+    if linguagem == 'c':
+        output_compilacao = compilar(arquivos, str(lab.disciplina), str(lab), request.user.username)
+    else:
+        output_compilacao = 'Linguagem não compilada.'
 
     # string com as linhas de saida dos testes
     output_testes = ""
     qtd_testes_corretos = 0 # contador de testes corretos
+
+    # seta a variável fonte no caso de linguagem interpretada
+    fonte = ""
+    if linguagem == 'python':
+        for arq in arquivos:
+            if arq.count('main') > 0:
+                fonte = arq
+
     # verifica se não houve erro de compilação para realizar os testes
     if output_compilacao.lower().count('error') == 0:
         # percorre todos os testes
         for i in range(lab.qtd_testes):
-            saida = testar(str(lab.disciplina), str(lab), request.user.username, i + 1)
+            saida = testar(str(lab.disciplina), str(lab), request.user.username, i + 1, linguagem, fonte)
 
             # verifica se o teste foi ok
             if saida == '':

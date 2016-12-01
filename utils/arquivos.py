@@ -40,14 +40,21 @@ def compilar(arquivos, disciplina, lab, username):
     return ret
 
 # Executa o programa e compara o arquivo, retornando o resultado
-def testar(disciplina, lab, username, num_teste):
+# Somente utiliza a variável fonte em caso de linguagem não compilada (python)
+def testar(disciplina, lab, username, num_teste, linguagem, fonte):
     # seta os paths
     path = SUSANA_FILES + disciplina + "/" + lab + "/"
     path_testes = path + "testes/"
     path += username + "/"
 
+    # dicionário com os comandos de execução do programa
+    executar = {
+        'c': './%s' % (username + ".out"),
+        'python': 'python3 %s' % fonte
+    }
+
     # executa e salva a saida.
-    ret = os.system("cd %s && timeout 5 ./%s <%sarq%02d.in >%sarq%02d.out" %(path, username + ".out", path_testes, int(num_teste), path, int(num_teste)))
+    ret = os.system("cd %s && timeout 5 %s <%sarq%02d.in >%sarq%02d.out" %(path, executar[linguagem], path_testes, int(num_teste), path, int(num_teste)))
 
     # Timeout retorna 124
     if (ret == 124):
