@@ -73,11 +73,14 @@ def submeter(request, lab_id):
     }
 
     # path no qual os arquivos serão salvos
-    path = "%s/susana-files/%s/%s/%s/" % (settings.BASE_DIR, str(lab.disciplina), str(lab), request.user.username)
+    path = "%s/susana-files/%s/%s/%s/" % (settings.BASE_DIR, str(lab.disciplina),
+                                          str(lab),
+                                          request.user.username)
+
     arquivos = [] # lista com os nomes dos arquivos upados
 
     # cria um diretório com o usuário
-    os.system("mkdir %s" % (path))
+    os.system("mkdir %s" % (normaliza_espacos(path)))
 
     # percorre os arquivos para fazer o upload
     for file in request.FILES.getlist('arquivos'):
@@ -93,7 +96,7 @@ def submeter(request, lab_id):
 
     # compila os arquivos se for linguagem c
     if linguagem == 'c':
-        output_compilacao = compilar(arquivos, str(lab.disciplina), str(lab), request.user.username)
+        output_compilacao = compilar(arquivos, lab, request.user.username)
     else:
         output_compilacao = 'Linguagem não compilada.'
 
@@ -102,7 +105,7 @@ def submeter(request, lab_id):
     qtd_testes_corretos = 0 # contador de testes corretos
 
     # seta a variável fonte no caso de linguagem interpretada
-    fonte = ""
+    fonte = arquivos[0]
     if linguagem == 'python':
         for arq in arquivos:
             if arq.count('main') > 0:
@@ -112,7 +115,7 @@ def submeter(request, lab_id):
     if output_compilacao.lower().count('error') == 0:
         # percorre todos os testes
         for i in range(lab.qtd_testes):
-            saida = testar(str(lab.disciplina), str(lab), request.user.username, i + 1, linguagem, fonte)
+            saida = testar(lab, request.user.username, i + 1, linguagem, fonte)
 
             # verifica se o teste foi ok
             if saida == '':
@@ -123,7 +126,7 @@ def submeter(request, lab_id):
                 output_testes += "%02d:\n%s\n" %(i + 1, saida)
 
     # deleta o diretório do usuário
-    os.system("rm -r %s" % (path))
+    os.system("rm -r %s" % (normaliza_espacos(path)))
 
     # cria a submissão no BD
     submissao = Submissoes()
@@ -171,7 +174,9 @@ def salvar_lab(request):
     # Cria o lab com base nos parâmetros
     lab = Labs(nome=request.POST['nome'],
                disciplina_id=request.POST['disciplina'],
-               qtd_testes=request.POST['qtd_testes'])
+               qtd_testes=int(request.POST['qtd_testes']),
+               arg_exec=request.POST['arg_exec'],
+               arg_diff=request.POST['arg_diff'])
 
     # salva no banco de dados
     lab.save()
@@ -181,11 +186,11 @@ def salvar_lab(request):
     # seta url para baixar testes
     url_testes = request.POST['url_testes']
 
-    # recebe as extensões de entrada e saida
-    ext_entrada, ext_saida = request.POST['ext_entrada'], request.POST['ext_saida']
+    # recebe os arquivos
+    arquivos = request.POST['arquivos']
 
     # cria o lab e baixa os testes
-    cria_lab(str(disciplina), str(lab), url_testes, int(lab.qtd_testes), ext_entrada, ext_saida)
+    cria_lab(lab, url_testes, arquivos)
 
     # retorna para a listagem de labs
     messages.success(request, 'Lab salvo com sucesso!')

@@ -11,6 +11,8 @@ class Labs(models.Model):
 
     nome = models.CharField(max_length=50, unique=True)
     qtd_testes = models.IntegerField()
+    arg_exec = models.CharField(max_length=255, null=True)
+    arg_diff = models.CharField(max_length=255, null=True)
 
     def __str__(self):
         return self.nome

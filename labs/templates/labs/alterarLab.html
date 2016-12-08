@@ -49,16 +49,25 @@
         </div>
 
         <div class="row">
-            <div class="form-group label-floating col-md-6">
-                <label for="ext_entrada" class="control-label">Extensão Entrada</label>
-                <input name="ext_entrada" id="ext_entrada" class="form-control" {% if lab %}readonly{% endif %}>
-            </div>
-            <div class="form-group label-floating col-md-6">
-                <label for="ext_saida" class="control-label">Extensão Saída</label>
-                <input name="ext_saida" id="ext_saida" class="form-control" {% if lab %}readonly{% endif %}>
+            <div class="form-group label-floating col-md-12">
+                <label for="arquivos" class="control-label">Arquivos (separados por vírgula)</label>
+                <input name="arquivos" id="arquivos" class="form-control" {% if lab %}disabled{% endif %}>
             </div>
         </div>
 
+        <div class="row">
+            <div class="form-group label-floating col-md-12">
+                <label for="arg_exec" class="control-label">Argumentos de execução</label>
+                <input name="arg_exec" id="arg_exec" class="form-control" {% if lab %}readonly value="{{ lab.arg_exec }}"{% endif %}>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group label-floating col-md-12">
+                <label for="arg_diff" class="control-label">Argumentos de diff</label>
+                <input name="arg_diff" id="arg_diff" class="form-control" {% if lab %}readonly value="{{ lab.arg_diff }}"{% endif %}>
+            </div>
+        </div>
 
         <!-- Diálogo para confirmação de exclusão -->
         <div id="confirmModal" class="modal fade">
