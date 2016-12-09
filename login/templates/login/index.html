@@ -44,6 +44,10 @@
   <body>
 
     <div class="container">
+        <div class="text-center">
+            <img src="{% static 'susana/img/susana-logo.png' %}" style="width:700px; text-align: center">
+        </div>
+
       <form class="form-signin" action="{% url 'login:check' %}" method="post">
         <div class="well page active">
           {% csrf_token %}
