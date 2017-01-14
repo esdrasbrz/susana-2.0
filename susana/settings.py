@@ -26,7 +26,7 @@ SECRET_KEY = 'm=-1$7@4##yjevg)8((t7+och9rv2y*jm0#fpn(n$*tmsnb$nk'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['brazcom.com.br', 'www.brazcom.com.br']
 
 
 # Application definition
@@ -123,7 +123,7 @@ USE_TZ = True
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_HTTPONLY = True
-SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+#SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
 AUTO_LOGOUT_DELAY = 15 # tempo para logout automatico '15 minutos'
 
 
@@ -134,6 +134,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(MASTER_PATH_DIR, 'static'),
 ]
+STATIC_ROOT = '/home/esdrasbrz/Projects/susana/static'
 
 # Configuração de data
 DATE_FORMAT = 'd/m/Y'
