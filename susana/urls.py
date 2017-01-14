@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.views.generic import RedirectView
 from . import views
 
 urlpatterns = [
@@ -23,4 +24,5 @@ urlpatterns = [
     url(r'^login/', include('login.urls')),
     url(r'^labs/', include('labs.urls')),
     url(r'^disciplinas/', include('disciplinas.urls')),
+    url(r'^susana/$', RedirectView.as_view(url='/')),
 ]
