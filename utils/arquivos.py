@@ -30,7 +30,7 @@ def compilar(arquivos, lab, username):
         if filtro.search(fonte) is not None:
             return u"error: Você não tem permissão para executar um comando do sistema!"
 
-    ret = subprocess.getoutput("cd %s && gcc -std=c99 -pedantic -Wall -lm %s -o %s" %(normaliza_espacos(path), " ".join(arquivos), username + ".out"))
+    ret = subprocess.getoutput("cd %s && gcc -Wall -Werror -ansi -pedantic -lm %s -o %s" %(normaliza_espacos(path), " ".join(arquivos), username + ".out"))
 
     return ret
 
